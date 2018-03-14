@@ -1,50 +1,66 @@
-# Overview
+# Обзор
 
-This is starter template for writing Android apps using **Clean architecture**. You can download it, modify it and start building your apps on top of it. Most of the boilerplate code for writing your first view, presenter and interactor is already written and you just need to implement your own logic. I wrote a [detailed guide] on how to write apps using this pattern but this README contains the summary.
+Это стартовый шаблон для написания Android приложений с использованием **Чистой архитектуры**.
+Вы можете скачать его, модифицировать его и начать строить свои приложения на его основе.
+Большая часть кода стартового шаблона для создания вашего первого вида, презентера и интерактора уже написана 
+ и вам лишь нужно реализовать свою собственную логику. Я написал [подробную инструкцию]  о том, как
+ писать приложения, использя этот паттерн, но данный README содержит итоговую выжимку.
 
-This starter app supports **API 15 and above**.
+Это стартовое приложение поддерживает **API 15 и выше**.
 
-This template uses **regular Java** instead of RxJava and does not use Dagger. Although I recommend Dagger, the reason for this is that I did not want to add more complexity as the architecture itself is probably complex enough to understand. If you prefer RxJava and Dagger then you can look at an awesome project called [Android-CleanArchitecture] that also inspired me to create this.
+Данный шаблон использует **обучную Java** вместо RxJava и не использует Dagger.
+Хотя я рекомендую Dagger, причина для этого в том, что не хотелось дополнительно усложнять, т.к.
+архитктура сама по себе вероятно достаточно сложна для понимания.
+Если вы предпочитаете RxJava и Dagger, то можете взглянуть на прекрасный проект под названием [Android-CleanArchitecture] 
+, который вдохновил меня для создания этого.
 
-To see a sample app using Clean Architecture you can look [here].
+Чтобы увидеть пример приложения, использующего Чистую Архитектуру, можете посмотреть [здесь].
 
-## Libraries included
+## Библиотеки, которые использованы
 
- - [Android Support Library] for backwards compatibility.
- - [Timber] for logging.
- - [Butterknife] for view injection.
- - [Retrofit] for network code.
- - [JUnit] and [Mockito] for testing.
- - [Findbugs] for finding bugs, *duh*.
+ - [Android Support Library] для обратной совместимости.
+ - [Timber] для логирования.
+ - [Butterknife] для инъекций в виды.
+ - [Retrofit] для сетевого взаимодействия.
+ - [JUnit] и [Mockito] для тестирования.
+ - [Findbugs] для поиск а багов, *а вы как думали!*.
 
-# Things to change
+# Что нужно поменять
 
-You will want to make a few minor changes when using this template:
+Вы захотите сделать некоторые незначительные изменения при использовании шаблона:
 
-- Rename the base package `com.kodelabs.boilerplate` to your preferred name. *[How to]*
-- Modify the `applicationId` in your `app/build.gradle` to the base package name you set in the above step.
-- Modify `package` in manifest tag in AndroidManifest.xml
+- Переименовать базовый пакет `com.kodelabs.boilerplate` на то имя, которое вы предпочитаете. *[Как это сделать]*
+- Изменить `applicationId` в вашем файле `app/build.gradle` на базовый пакет приложения, который вы выбрали шагом выше.
+- Изменить `package` в теге манифеста в файле AndroidManifest.xml
 
-***If you have built and/or published apps using this boilerplate, let me know and I will list it here.***
+***Если вы создали и/или опубликовали приложение с использованием данного шаблона, дайте мне знать и я упомяну его в списке здесь.***
 
-# Getting started writing a new use case
+# Начинаем с написания нового use case
 
-A use case is just some isolated functionality of the app. A use case may  (e.g. on user click) or may not be started by a user. For example, a use case might be: *"Get all data from the database and display it on the UI when the app starts."*
+Use case это лишь некоторая изолированная функциональность приложения.
+Use case может быть инициирован пользователем (например по нажатию пользователя), а может и не быть. 
+Напрммер, use case мог бы быть следующий: *"Получить все данные из базы данных и отобразить их в UI при старте приложения"*.
 
-In this example, our use case will be: ***"Greet the user with a message that is stored in the database when the app starts."*** This example can be tried out in the `example` branch. This example will showcase how to write the following three packages needed to make the use case work:
+В этом примере наш use case будет: ***"Поприветствовать пользователя сообщением, которое хранится в базе данных, когда приложение стартует."*** 
+Этот пример может быть опробован в ветке `example`. Данный пример покажет как написать следующие три пакета, 
+необходимые для того, чтобы сценарий заработал:
 
-- the **presentation** layer
-- the **storage** layer
-- the **domain** layer
+- **презентационные** слои 
+- слои **хранилища**
+- слои **предметной области**
 
-The first two belong to the outer layers while the last one is the inner/core layer. **Presentation** package is responsible for everything related to showing things on the screen — it includes the whole MVP stack (it means it also includes both the UI and Presenter packages even though they belong to different layers).
+Первые два относятся к внешним слоям, в то время как последний - к внутреннему слою ядра. 
+Пакет **presentation** отвечает за все, что связано с отображением на экране  — он включает целый MVP стек (это означает, что он включает пакеты и UI и Презентера, хотя они относятся к различным слоям).
 
 
-## **Writing a new interactor (inner/core layer)**
+## **Создание нового интерактора(внутренний слой / слой ядра)**
 
-In reality you could start in any layer of the architecture, but I recommend you to start on your core business logic first. You can write it, test it and make sure it works without ever creating an activity.
+В реальности вы могли бы начать с любого слоя архитетуры, но я рекомендую вам начать с бизнес-логики приложения.
+Вы можете написать ее, оттестировать ее и убедиться, что она работает без создания какого-либо экрана активности.
 
-So let's start by creating an interactor. The interactor is where the main logic of the use case resides. **All interactors are run in the background thread so there shouldn't be any impact on UI performance.** Let's create a new interactor with a warm name of `WelcomingInteractor`.
+Итак, начнем с создания интерактора. Интерактор - это место, где обитает главная логика сценария use-case. 
+**Все интеракторы запускаются в фоновом треде, поэтому они не должны оказывать влияние на производительность UI.**
+Давайте создадим новый интерактор с теплым именем `WelcomingInteractor`.
 
 ```java
 public interface WelcomingInteractor extends Interactor {
@@ -59,15 +75,17 @@ public interface WelcomingInteractor extends Interactor {
 
 ```
 
-The `Callback` is responsible for talking to the UI on the main thread, we put it into this Interactor’s interface so we don’t have to name it a ***WelcomingInteractorCallback*** — to distinguish it from other callbacks. Now let’s implement our logic of retrieving a message. Let's say we have some `MessageRepository` that can give us our welcome message.
+Интерфейс `Callback` ответственнен за общение с UI в главном потоке, мы помещаем все это в интерфейс Interactor-а, поэтому нам нет необходимости его именовать чем-то вроде 
+***WelcomingInteractorCallback*** — чтобы отличать егоот других колбэков.
+ Теперь давайте имплементируем нашу логику получения сообщения. Скажем, у нас есть некий `MessageRepository`, который может дать нам наше сообщение для приветствия.
 
 ```java
 public interface MessageRepository {
     String getWelcomeMessage();
 }
 ```
-
-Now we should implement our Interactor interface with our business logic. **It is important that the implementation extends the `AbstractInteractor` which takes care of running it on the background thread.**
+Теперь нам нужно реализовать наш интерфейс Interactor с собственной бизнес-логикой.
+**Важно, чтобы реализация наследовала от класса `AbstractInteractor`, который берет на себя запуск его в фоновом потоке.**
 
 ```java
 public class WelcomingInteractorImpl extends AbstractInteractor implements WelcomingInteractor {
@@ -95,26 +113,26 @@ public class WelcomingInteractorImpl extends AbstractInteractor implements Welco
   @Override
   public void run() {
 
-      // retrieve the message
+      // получаем сообщение
       final String message = mMessageRepository.getWelcomeMessage();
 
-      // check if we have failed to retrieve our message
+      // проверяем, провалились ли мы при получении нашего сообщения
       if (message == null || message.length() == 0) {
 
-          // notify the failure on the main thread
+          // уведомляем о провале пользовательский интерфейс в главном потоке
           notifyError();
 
           return;
       }
 
-      // we have retrieved our message, notify the UI on the main thread
+      // мы получили наше сообщение, уведомляем UI главного потока
       postMessage(message);
   }
 }
 ```
-This just attempts to retrieve the message and sends the message or the error to the UI to display it. We notify the UI using our `Callback` which is actually going to be our `Presenter`. **That is the crux of our business logic. Everything else we need to do is framework dependent.**
+Здесь лишь попытка полчить сообщение и отправить сообщение или ошибок в UI для отображения. Мы уведомляем UI используя наш `Callback` который на самом деле будет нашим `Презентером`. **Это крест нашей бизнес-логики. Последнее, что нам нужно - это зависимость от фреймворка.**
 
-Let's take a look which dependencies does this Interactor have:
+Давайте взглянем на то, какие зависимости имеет этот Интерактор:
 
 ```java
 import com.kodelabs.boilerplate.domain.executor.Executor;
@@ -124,11 +142,12 @@ import com.kodelabs.boilerplate.domain.interactors.base.AbstractInteractor;
 import com.kodelabs.boilerplate.domain.repository.MessageRepository;
 ```
 
-As you can see, there is **no mention of any Android code**. That is the **main benefit** of this approach. Also, we do not care about specifics of the UI or database, we just call interface methods that someone somewhere in the outer layer will implement.
+Вы можете видеть, что нет **ни единого упоминания об Android коде**. Это **главное преимущество** данного подхода. 
+Кроме того, мы не беспокоимся о специфике UI базы данных, мы просто вызываем методы интерфейса, которые где-то во внешнем слое будут реализованы.
 
-## **Testing our interactor**
+## **Тестирование нашего интерактора**
 
-We can now run and test our Interactor without running an emulator. So let's write a simple **JUnit** test to make sure it works:
+Мы теперь можем запустить и протестировать наш Интерактор без запуска эмулятора. Давайте напишем простой **JUnit** тест, чтобы убедиться, что он работает:
 
 ```java
 @Test
@@ -153,13 +172,14 @@ public void testWelcomeMessageFound() throws Exception {
 }
 ```
 
-Again, this Interactor code has no idea that it will live inside an Android app.
+Еще раз, данный код Интерактора даже не догадывается, что он будет жить внутри Андроид приложения.
 
-## **Writing the presentation layer**
+## **Создание презентационного слоя**
 
-Presentation layer is the **outer layer** in Clean. It consists of framework dependent code to display the UI to the user. We will use `MainActivity` class to display the welcome message to the user when the app resumes.
+Презентационный слой - это **внешний слой** в Чистой Архитектуре. Он состоит из фреймворко-зависимого кода для отображения UI пользователю.
+Мы будем использовать класс `MainActivity` для отображения привественного сообщения пользователю, когда приложение запускается.
 
-Let's start by writing the interface of our `Presenter` and `View`. The only thing our `view` needs to do is to display the welcome message:
+Давайте начнем с написания интерфейса нашего `Презентера` и `Вида`. Единственная вещь, которая нужна нашему `виду` это отобразить сообщение:
 
 ```java
 public interface MainPresenter extends BasePresenter {
@@ -170,21 +190,24 @@ public interface MainPresenter extends BasePresenter {
 }
 ```
 
-So how and where do we start the Interactor when an app resumes? Everything that is not strictly view related should go into the `Presenter` class. This helps achieve `separation of concerns` and prevents the `Activity` classes from getting bloated. This includes all code working with Interactors.
+Как и где мы стартуем Интерактор, когда приложение стартует? Все, что не связно жестко с видом, должно идти в класс `Презентера`. 
+Это помогает дочись `разделение ответственности` и предохраняет класссы `Activity` от перегрузки. 
+Он включает весь код, работающий с Интеракторами.
 
-In our `MainActivity` class we override the `onResume` method:
+В нашем классе `MainActivity` мы перекрываем методе `onResume`:
 
 ```java
 @Override
 protected void onResume() {
     super.onResume();
 
-    // let's start welcome message retrieval when the app resumes
+    // давайте начнем получение приветственного сообщения, когда стартует приложение
     mPresenter.resume();
 }
 ```
 
-All `Presenter` objects implement the `resume()` method when they extend `BasePresenter`. We start the interactor inside the `MainPresenter` class in the `resume()` method:
+Все объекты `Презентеры` реализуют метод `resume()` когда наследуют от класса `BasePresenter`. 
+Мы стартуем интерактор внутри класса `MainPresenter` в методе `resume()`:
 
 ```java
 @Override
@@ -192,7 +215,7 @@ public void resume() {
 
     mView.showProgress();
 
-    // initialize the interactor
+    // инициализируем интерактор
     WelcomingInteractor interactor = new WelcomingInteractorImpl(
             mExecutor,
             mMainThread,
@@ -200,31 +223,32 @@ public void resume() {
             mMessageRepository
     );
 
-    // run the interactor
+    // запускаем интерактор
     interactor.execute();
 }
 ```
 
-The `execute()` method will just execute the `run()` method of the `WelcomingInteractorImpl` in a background thread. The `run()` method can be seen later in the ***Writing a new interactor*** section.
+Метод `execute()` лишь запустит метод `run()` класса `WelcomingInteractorImpl` в фоновом потоке. Метод `run()` можем увидеть в разделе  ***Создание нового интерактора***.
 
-You may notice that the Interactor behaves similarly to the `AsyncTask` class. You supply it with all that it needs to run and execute it. You might ask why didn't we just use `AsyncTask`? Because that is **Android specific code** and you would need an emulator to run it and to test it.
+Вы можете заметить, что Интерактор поведет схожим образом как и класс `AsyncTask`. 
+Вы можете спросить, почему мы просто не использовали `AsyncTask`?
+Т.к. это **Android специфичный код** и вам потребуется эмулятор для запуска его и тестирования его.
 
+Мы предоставляем различные вещи в Интерактор:
 
-We provide several things to the Interactor:
+- Объект `ThreadExecutor`, который ответственен за выполнение интеракторов в фоновом потоке. Я обычно делаю его синглтоном. Этот класс относится к категории `domain`, предметной области и не обязан быть реализован во внешнем слое.
+- Объект `MainThreadImpl` который ответственен за запуск Runnable в главном потоке из кода интерактора. Главные потоки доступн, с использованием фреймворко-зависимого кода и мы реализуем его во внешнем слое `threading`.
+- Вы можете отметить, что мы предоставляем `this` Интерактору — `MainPresenter` это объект `Callback`, который Интерактор будет использовать для уведомления UI по событиям.
+- Мы предоставляем экземпляр класса `WelcomeMessageRepository` который реализует интерфейс `MessageRepository`, который использует наш интерактор. `WelcomeMessageRepository` раскрывается позднее в разделе ***Создание слоя хранения***.
 
-- The `ThreadExecutor` instance which is responsible for executing interactors in a background thread. I usually make it a singleton. This class actually resides in the `domain` and does not need to be implemented in an outer layer.
-- The `MainThreadImpl` instance which is responsible for posting runnables on the main thread from the interactor. Main threads are accessible using framework dependent code and we implement it in an outer `threading` layer.
-- You may also notice we provide `this` to the Interactor — `MainPresenter` is the `Callback` object the Interactor will use to notify the UI for events.
-- We provide an instance of the `WelcomeMessageRepository` which implements the `MessageRepository` interface that our interactor uses. The `WelcomeMessageRepository` is covered later in the ***Writing the storage layer*** section.
-
-Regarding `this`, the `MainPresenter` of the `MainActivity` really does implement the `Callback` interface:
+Согласно `this`, `MainPresenter` класса `MainActivity` действительно реализует интерфейс `Callback`:
 
 ```java
 public class MainPresenterImpl extends AbstractPresenter implements MainPresenter,
         WelcomingInteractor.Callback {
 ```
 
-And that is how we listen for events from the Interactor. This is the code from the `MainPresenter`:
+И это тот способ, которым мы ловим сигналы о событиях от Интерактора. Это код из `MainPresenterImpl`:
 
 ```java
 @Override
@@ -240,13 +264,13 @@ public void onRetrievalFailed(String error) {
 }
 ```
 
-The `View` seen in these snippets is our `MainActivity` which implements this interface:
+`Вид` как следует из этиз снипетов, это `MainActivity` который реализует этот интерфейс:
 
 ```java
 public class MainActivity extends AppCompatActivity implements MainPresenter.View {
 ```
 
-Which is then responsible for displaying these messages, as seen here:
+Который затем ответственен за отображение этих сообщений, как показано здесь:
 
 ```java
 @Override
@@ -255,23 +279,27 @@ public void displayWelcomeMessage(String msg) {
 }
 ```
 
-And that is pretty much it for the presentation layer.
+И это все, что касается презентационного слоя.
 
-## **Writing the storage layer**
+## **Создание слоя хранения**
 
-This is where our repository gets implemented. All the database specific code should come here. The repository pattern just abstracts where the data is coming from. Our main business logic is oblivious to the source of the data — be it from a database, a server or text files.
+Это то, где нашрепозиторий имплементируется. Весь БД-специфичный код должен идти сюда. 
+Паттерн репозиторий лишь абстрагирует, откуда приходят данные. 
+Наша главная бизнес-логика безразлична к источнику данных  — будь это база данных, сервер или текстовые файлы.
 
-For complex data you can use [ContentProviders] or ORM tools such as [DBFlow]. If you need to retrieve data from the web then [Retrofit] will help you. If you need simple key-value storage then you can use [SharedPreferences]. You should use the right tool for the job.
+Для сложных данных вы можете использовать [ContentProvider] или ORM инструменты, такие как [DBFlow]. 
+Если вам необходимо получить данные из веба, то [Retrofit] вам в помощь. 
+Если вам нужноо простое хранилище ключ-значение, то вы можете использовать [SharedPreferences]. Вы должны использовать подходящий инструмент для решения задачи. 
 
-Our database is not really a database. It is going to be a very simple class with some simulated delay:
+Наша база данных - на самом деле не СУБД. Это будет очень простой класс с симуляцией некоей задержки:
 
 ```java
 public class WelcomeMessageRepository implements MessageRepository {
     @Override
     public String getWelcomeMessage() {
-        String msg = "Welcome, friend!"; // let's be friendly
+        String msg = "Welcome, friend!"; // будем дружелюбны
 
-        // let's simulate some network/database lag
+        // Давайте просимулируем некоторый временной лаг от сети/БД
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -282,16 +310,16 @@ public class WelcomeMessageRepository implements MessageRepository {
     }
 }
 ```
-As far as our `WelcomingInteractor` is concerned, the lag might be because of the real network or any other reason. It doesn't really care what is underneath the `MessageRepository` as long as it implements that interface.  
+Что касается нашего `WelcomingInteractor`, лаг возможен, по причине работы с реальной сетью или подобной причине. Интерактор на самом деле не беспокоится, что скрывается под `MessageRepository` пока он реализует данный интерфейс.  
 
 
-# License
+# Лицензия
 
 `MIT`
 
-[detailed guide]: <https://medium.com/p/a-detailed-guide-on-developing-android-apps-using-the-clean-architecture-pattern-d38d71e94029>
-[here]: <https://github.com/dmilicic/android-clean-sample-app>
-[How to]: <https://stackoverflow.com/questions/16804093/android-studio-rename-package>
+[подробную инструкцию]: <https://medium.com/p/a-detailed-guide-on-developing-android-apps-using-the-clean-architecture-pattern-d38d71e94029>
+[здесь]: <https://github.com/dmilicic/android-clean-sample-app>
+[Как это сделать]: <https://stackoverflow.com/questions/16804093/android-studio-rename-package>
 [Butterknife]: <https://github.com/JakeWharton/butterknife>
 [Timber]: <https://github.com/JakeWharton/timber>
 [Android Support Library]: <https://developer.android.com/tools/support-library/index.html>
@@ -301,6 +329,6 @@ As far as our `WelcomingInteractor` is concerned, the lag might be because of th
 [Findbugs]: <http://findbugs.sourceforge.net/>
 [DBFlow]: <https://github.com/Raizlabs/DBFlow>
 [SharedPreferences]: <http://developer.android.com/training/basics/data-storage/shared-preferences.html>
-[ContentProviders]: <http://developer.android.com/guide/topics/providers/content-providers.html>
+[ContentProvider]: <http://developer.android.com/guide/topics/providers/content-providers.html>
 
 [Android-CleanArchitecture]: <https://github.com/android10/Android-CleanArchitecture>
